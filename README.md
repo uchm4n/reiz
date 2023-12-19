@@ -12,14 +12,18 @@
  - Laravel Queues (using supervisor)
 
 # Instruction 
-install composer packages
+> Install composer packages
  - composer install
 
-Run Laravel Sail's up command. (you have to have a docker running):
+> Copy .env.example -> .env 
+
+
+
+> Run Laravel Sail's up command. (you have to have a docker running):
  -  ./vendor/bin/sail build
  - ./vendor/bin/sail up
  
-Or if you want Docker to run in the background:
+  Or if you want Docker to run in the background:
 
  - ./vendor/bin/sail up -d
 
