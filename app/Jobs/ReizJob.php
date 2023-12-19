@@ -29,8 +29,7 @@ class ReizJob implements ShouldQueue
     public function handle(): void
     {
 
-        Redis::command("set name 'Ucha'");
-        Redis::hSet('html', ['h_key' => 'h_val']);
+
         dump('TESTING JOB');
         // throw_if(true,'TEsting');
     }

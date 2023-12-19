@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Web\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', MainController::class);
 
-Route::get('/', function () {
-
-    \App\Jobs\ReizJob::dispatch();
-
+Route::get('/test', function () {
 
     return view('main');
 });
