@@ -8,10 +8,14 @@ use Illuminate\View\View;
 
 class MainController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(\App\Models\ReizJob $jobs): View
     {
-        ReizJob::dispatch();
+        $data = $jobs::query()
+            //->with('detail')
+            ->orderByDesc('created_at')
+            ->take(100)
+            ->get();
 
-        return view('main');
+        return view('main', compact('data'));
     }
 }
