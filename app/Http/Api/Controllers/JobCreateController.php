@@ -3,7 +3,7 @@
 namespace App\Http\Api\Controllers;
 
 use App\Http\Api\Requests\JobRequest;
-use App\Http\Shared\Controller;
+use App\Http\Controller;
 use Illuminate\Http\JsonResponse;
 
 class JobCreateController extends Controller

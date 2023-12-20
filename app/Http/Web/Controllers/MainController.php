@@ -2,7 +2,7 @@
 
 namespace App\Http\Web\Controllers;
 
-use App\Http\Shared\Controller;
+use App\Http\Controller;
 use App\Jobs\ReizJob;
 use Illuminate\View\View;
 
