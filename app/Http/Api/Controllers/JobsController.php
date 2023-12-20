@@ -27,12 +27,12 @@ class JobsController extends Controller
     }
 
 
-    public function get(ReizJobDetail $detail): JsonResponse
+    public function get($job, ReizJobDetail $detail): JsonResponse
     {
         $detail = $detail::with(['job' => fn(Builder $q) => $q->select(['id', 'url', 'selectors'])])
             // or
             // with('job:id,url,selectors')
-            ->get();
+            ->find($job);
 
         return response()->json([
             'detail' => $detail
@@ -43,20 +43,28 @@ class JobsController extends Controller
     public function store(JobRequest $request, ReizJob $job): JsonResponse
     {
         //save validated
-        $job::create($request->validated());
+        $job = $job::query()->create($request->validated());
 
         // Dispatch a job
-        \App\Jobs\ReizJob::dispatch($request->validated());
+        \App\Jobs\ReizJob::dispatch($job->id);
 
         return response()->json([
             'data' => $request->validated()
         ], Response::HTTP_CREATED);
     }
 
-    public function delete(): JsonResponse
+    public function delete(int $job): JsonResponse
     {
+        try {
+            $job = ReizJob::findOrFail($job);
+            $job->delete();
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => "Can not delete. No records found for id: $job"
+            ], Response::HTTP_NOT_FOUND);
+        }
         return response()->json([
-            'data' => ['test']
+            'data' => $job
         ], Response::HTTP_NO_CONTENT);
     }
 }

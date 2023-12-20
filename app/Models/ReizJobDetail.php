@@ -10,9 +10,12 @@ class ReizJobDetail extends Model
 {
     use HasFactory;
 
+    public $table = 'reiz_job_details';
+
+    protected $guarded = ['id'];
 
     public function job(): BelongsTo
     {
-        return $this->belongsTo(ReizJob::class,'reiz_job_id');
+        return $this->belongsTo(ReizJob::class,'reiz_job_id','id');
     }
 }

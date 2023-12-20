@@ -2,15 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Jobs\Actions\CrawlAction;
+use App\Jobs\Actions\ProcessDataAction;
 use Illuminate\Bus\Queueable;
-use Illuminate\Container\EntryNotFoundException;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Redis;
 
 class ReizJob implements ShouldQueue
 {
@@ -19,7 +18,7 @@ class ReizJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private readonly array $requestArray)
+    public function __construct(private int $id)
     {
     }
 
@@ -28,9 +27,21 @@ class ReizJob implements ShouldQueue
      */
     public function handle(): void
     {
-        [$url, $selector] = $this->requestArray;
+        /** @var \App\Models\ReizJob $model */
+        $model = \App\Models\ReizJob::find($this->id);
 
-        dump('Request inbound', $url, $selector);
-        // throw_if(true,'TEsting');
+        // use Pipeline pattern to filter out data
+        $data = app(Pipeline::class)
+            ->send($model)
+            ->through([
+                CrawlAction::class,
+                ProcessDataAction::class,
+            ])
+            ->thenReturn();
+
+
+        $model->detail()->create([
+            'data' => $data
+        ]);
     }
 }

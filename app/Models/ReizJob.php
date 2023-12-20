@@ -10,11 +10,13 @@ class ReizJob extends Model
 {
     use HasFactory;
 
+    public $table = 'reiz_jobs';
+
     protected $guarded = ['id'];
 
 
     public function detail(): HasOne
     {
-        return $this->hasOne(ReizJobDetail::class);
+        return $this->hasOne(ReizJobDetail::class,'reiz_job_id','id');
     }
 }
