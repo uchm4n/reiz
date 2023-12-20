@@ -35,7 +35,7 @@ class JobsController extends Controller
             ->find($job);
 
         return response()->json([
-            'detail' => $detail
+            'data' => $detail
         ], Response::HTTP_OK);
     }
 

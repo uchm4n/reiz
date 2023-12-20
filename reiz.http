@@ -4,7 +4,7 @@ Accept: application/json
 
 ###
 
-GET http://localhost:8000/api/jobs/3
+GET http://localhost:8000/api/jobs/7
 Accept: application/json
 
 
