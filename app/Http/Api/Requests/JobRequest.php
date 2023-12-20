@@ -20,13 +20,9 @@ class JobRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        $errors = (new ValidationException($validator))->errors();
-
-        throw new HttpResponseException(
-            response()->json([
-                'errors' => $errors
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
-        );
+        return response()->json([
+            'errors' => $validator->getMessageBag()->getMessages()
+        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Models\ReizJob;
 use App\Models\ReizJobDetail;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class JobsController extends Controller
 {
@@ -22,7 +23,7 @@ class JobsController extends Controller
 
         return response()->json([
             'data' => $data,
-            'status' => 200
+            'status' => Response::HTTP_OK
         ]);
     }
 
@@ -36,7 +37,7 @@ class JobsController extends Controller
 
         return response()->json([
             'detail' => $detail,
-            'status' => 200
+            'status' => Response::HTTP_OK
         ]);
     }
 
@@ -46,8 +47,8 @@ class JobsController extends Controller
         // insert into Redis
         // Redis::set($request->toArray());
         return response()->json([
-            'data' => ['test'],
-            'status' => 200
+            'data' => $request->all(),
+            'status' => Response::HTTP_OK
         ]);
     }
 
@@ -55,7 +56,7 @@ class JobsController extends Controller
     {
         return response()->json([
             'data' => ['test'],
-            'status' => 200
+            'status' => Response::HTTP_OK
         ]);
     }
 }
