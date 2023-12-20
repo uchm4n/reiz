@@ -14,7 +14,8 @@ POST http://localhost:8000/api/jobs
 Content-Type: application/json
 
 {
-  "name" : "test"
+  "url" : "http://localhost:8000",
+  "selectors": "test7"
 }
 
 <> 2023-12-20T014248.500.html

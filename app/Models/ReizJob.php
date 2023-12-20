@@ -10,6 +10,8 @@ class ReizJob extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
 
     public function detail(): HasOne
     {

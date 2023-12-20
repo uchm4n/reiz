@@ -2,11 +2,14 @@
 
 namespace App\Http\Api\Requests;
 
-use HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
+use App\Models\ReizJob;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class JobRequest extends FormRequest
 {
@@ -18,29 +21,54 @@ class JobRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Get the after hooks that should be applied to the validator.
+     * trying to validate if url and selectors is already exists in db
+     *
+     * @return array<callable(Validator):void>
+     */
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                $this->get('url');
+
+                $alreadyExists = ReizJob::query()
+                    ->where('url', stripslashes($this->get('url')))
+                    ->where('selectors', $this->get('selectors'))
+                    ->exists();
+
+                if ($alreadyExists) {
+                    $validator->errors()->add('url', 'this url and selector already exists!');
+                }
+            }
+        ];
+    }
+
+
     public function failedValidation(Validator $validator)
     {
-        return response()->json([
-            'errors' => $validator->getMessageBag()->getMessages()
-        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        // if validation fails, return json with errors
+        throw new HttpResponseException(
+            response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return match ($this->getMethod()) {
-            'GET' => [
-                'name' => 'required',
-                'urls' => 'required|array'
-            ],
+            // 'GET' => [
+            //     'url' => 'required',
+            //     'selectors' => 'required|array'
+            // ],
             'POST' => [
-                'name' => 'required',
-                'urls' => 'required|array',
-                'html' => 'required'
+                'url' => 'required|url',
+                'selectors' => 'required'
             ]
         };
     }

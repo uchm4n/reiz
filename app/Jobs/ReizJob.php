@@ -7,6 +7,7 @@ use Illuminate\Container\EntryNotFoundException;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Redis;
@@ -18,9 +19,8 @@ class ReizJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(private readonly array $requestArray)
     {
-        //
     }
 
     /**
@@ -28,9 +28,9 @@ class ReizJob implements ShouldQueue
      */
     public function handle(): void
     {
+        [$url, $selector] = $this->requestArray;
 
-
-        dump('TESTING JOB');
+        dump('Request inbound', $url, $selector);
         // throw_if(true,'TEsting');
     }
 }

@@ -22,9 +22,8 @@ class JobsController extends Controller
             ->get();
 
         return response()->json([
-            'data' => $data,
-            'status' => Response::HTTP_OK
-        ]);
+            'data' => $data
+        ], Response::HTTP_OK);
     }
 
 
@@ -36,27 +35,28 @@ class JobsController extends Controller
             ->get();
 
         return response()->json([
-            'detail' => $detail,
-            'status' => Response::HTTP_OK
-        ]);
+            'detail' => $detail
+        ], Response::HTTP_OK);
     }
 
 
-    public function store(JobRequest $request): JsonResponse
+    public function store(JobRequest $request, ReizJob $job): JsonResponse
     {
-        // insert into Redis
-        // Redis::set($request->toArray());
+        //save validated
+        $job::create($request->validated());
+
+        // Dispatch a job
+        \App\Jobs\ReizJob::dispatch($request->validated());
+
         return response()->json([
-            'data' => $request->all(),
-            'status' => Response::HTTP_OK
-        ]);
+            'data' => $request->validated()
+        ], Response::HTTP_CREATED);
     }
 
     public function delete(): JsonResponse
     {
         return response()->json([
-            'data' => ['test'],
-            'status' => Response::HTTP_OK
-        ]);
+            'data' => ['test']
+        ], Response::HTTP_NO_CONTENT);
     }
 }
