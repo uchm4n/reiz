@@ -10,12 +10,6 @@ class MainController extends Controller
 {
     public function __invoke(\App\Models\ReizJob $jobs): View
     {
-        $data = $jobs::query()
-            //->with('detail')
-            ->orderByDesc('created_at')
-            ->take(100)
-            ->get();
-
-        return view('main', compact('data'));
+        return view('main');
     }
 }

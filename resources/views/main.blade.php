@@ -779,6 +779,7 @@
             }
         }
     </style>
+    @livewireStyles
 </head>
 <body class="antialiased">
 
@@ -800,77 +801,18 @@
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-
-                                {{--can be a livewire component--}}
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            ID
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Url
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Created At
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Selectors
-                                        </th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Actions
-                                        </th>
-
-                                    </tr>
-
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($data as $job)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{$job->id}}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{$job->url}}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{$job->selectors}}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                {{$job->created_at}}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                <button class="flex items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" data-slot="icon" class="w-5 h-5">
-                                                        <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                    <!-- More rows... -->
-                                    </tbody>
-                                </table>
-
-
+                                {{-- livewire component --}}
+                                <livewire:jobs-table />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="max-w-5xl mx-auto p-6 lg:p-8">
-        <div class="mt-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                &nbsp;
-            </div>
-        </div>
 
-    </div>
 </div>
+
+@livewireScripts
 </body>
 </html>
