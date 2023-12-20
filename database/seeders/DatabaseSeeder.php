@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ReizJob;
+use Database\Factories\ReizJobDetailFactory;
+use Database\Factories\ReizJobFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $factory = ReizJobFactory::new()->create([
+            'url' => 'http://laravel.com',
+            'selectors' => 'body div.content'
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        ReizJobDetailFactory::new()->for($factory, 'job')
+            ->create([
+                'data' => 'Test Data'
+            ]);
     }
 }
