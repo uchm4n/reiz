@@ -3,39 +3,31 @@
 
 # Stats
  - PHP 8.2 (ubuntu:22.04, with all necessary extensions)
- - Xdebug 3 (enabled port 9003)
+ - Xdebug (on port 9003)
  - Node 20
  - Laravel Sail (for containers)
  - Redis
- - Mysql 8
+ - Mysql
  - Supervisor
  - Laravel Queues (using supervisor)
- - Laravel Dusk (for data scraping)
+ - symfony/browser-kit (for data scraping)
+ - Livewire (for main web page)
 
-# Instruction 
-##### Install composer packages
- - `composer install` 
- - copy `.env.example` -> `.env `
-
-
-
+# Instruction
 ##### Run Laravel Sail's up command. (you have to have a docker running):
 
  -  `./vendor/bin/sail build`
  - `./vendor/bin/sail up`
- 
-  Or if you want Docker to run in the background:
-
- - `./vendor/bin/sail up -d`
-
 By doing this, all of your application's Docker containers will be started.
 
-##### Installing Laravel Dusk
-_**Note:** I could've use `weidner/goutte` but Dusk has mush more functionality, 
-    since it uses actual chrome driver binary itself, 
-    which means we can use proxies to scrape sites continuously.._
+##### Install composer packages
+- `sail composer install`
+- copy `.env.example` -> `.env `
+- run `sail artisan migrate:install`
+- `sail artisan db:seed`
 
- - `./vendor/bin/sail artisan dusk:install`
+#### Testing
+- `sail artisan test` (it should test get/post/delete endpoints)
 
 
 

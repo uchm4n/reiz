@@ -3,13 +3,13 @@
 namespace App\Http\Api\Controllers;
 
 
-use App\Http\Api\Requests\JobRequest;
-use App\Http\Controller;
 use App\Models\ReizJob;
+use App\Http\Controller;
 use App\Models\ReizJobDetail;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use App\Http\Api\Requests\JobRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class JobsController extends Controller
 {
@@ -38,7 +38,6 @@ class JobsController extends Controller
             'data' => $detail
         ], Response::HTTP_OK);
     }
-
 
     public function store(JobRequest $request, ReizJob $job): JsonResponse
     {

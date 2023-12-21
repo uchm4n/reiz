@@ -12,7 +12,6 @@ class JobsTable extends Component
 
     public function mount(ReizJob $jobs)
     {
-
         $this->data = $jobs::query()
             //->with('detail')
             ->orderByDesc('created_at')
@@ -24,6 +23,10 @@ class JobsTable extends Component
     public function delete(int $id,ReizJob $jobs): void
     {
         $jobs::query()->find($id)->delete();
+        $this->data = $jobs::query()
+                ->orderByDesc('created_at')
+                ->take(100)
+                ->get();
     }
 
 
