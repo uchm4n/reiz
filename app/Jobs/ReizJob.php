@@ -18,17 +18,16 @@ class ReizJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private int $id)
+    public function __construct(public $job)
     {
     }
 
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(\App\Models\ReizJob $model)
     {
-        /** @var \App\Models\ReizJob $model */
-        $model = \App\Models\ReizJob::find($this->id);
+        $model = $model::query()->find($this->job);
 
         // use Pipeline pattern to filter out data
         $data = app(Pipeline::class)

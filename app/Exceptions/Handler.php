@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +27,26 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+
+    /**
+     * Modify exception logging. Log without massive trace messages
+     * @param Throwable $e
+     * @return void
+     */
+    public function report(\Throwable $e)
+    {
+        // new compact Exception logging format
+        $exceptionFormat = "Class: %s | Message: %s | FILE: %s -> L:%s ";
+        Log::error(
+            sprintf(
+                $exceptionFormat,
+                get_class($e),
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            )
+        );
     }
 }

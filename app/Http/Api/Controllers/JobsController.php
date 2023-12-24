@@ -45,7 +45,7 @@ class JobsController extends Controller
         $job = $job::query()->create($request->validated());
 
         // Dispatch a job
-        \App\Jobs\ReizJob::dispatch($job->id);
+        \App\Jobs\ReizJob::dispatch($job);
 
         return response()->json([
             'data' => $request->validated()
