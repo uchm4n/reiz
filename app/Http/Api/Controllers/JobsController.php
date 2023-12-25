@@ -39,10 +39,10 @@ class JobsController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function store(JobRequest $request, ReizJob $job): JsonResponse
+    public function store(JobRequest $request): JsonResponse
     {
         //save validated
-        $job = $job::query()->create($request->validated());
+        $job = ReizJob::query()->create($request->validated());
 
         // Dispatch a job
         \App\Jobs\ReizJob::dispatch($job);

@@ -18,20 +18,19 @@ class ReizJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public $job)
+    public function __construct(public \App\Models\ReizJob $model)
     {
     }
 
     /**
      * Execute the job.
      */
-    public function handle(\App\Models\ReizJob $model)
+    public function handle()
     {
-        $model = $model::query()->find($this->job);
 
         // use Pipeline pattern to filter out data
         $data = app(Pipeline::class)
-            ->send($model)
+            ->send($this->model)
             ->through([
                 CrawlAction::class,
                 ProcessDataAction::class,
@@ -39,7 +38,7 @@ class ReizJob implements ShouldQueue
             ->thenReturn();
 
 
-        $model->detail()->create([
+        $this->model->detail()->create([
             'data' => $data
         ]);
     }
