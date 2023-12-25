@@ -31,7 +31,6 @@ class JobRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                return true;
                 $alreadyExists = ReizJob::query()
                     ->where('url', stripslashes($this->get('url')))
                     ->where('selectors', $this->get('selectors'))

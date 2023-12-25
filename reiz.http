@@ -10,7 +10,7 @@ POST {{host}}/api/jobs
 Content-Type: application/json
 
 {
-  "url" : "https://laravel.com",
+  "url" : "https://laravel.com/",
   "selectors": "body section div .relative p"
 }
 
