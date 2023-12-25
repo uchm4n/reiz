@@ -27,8 +27,8 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{$job->id}}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{$job->url}}
+            <td  class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <a href="#">{{$job->url}}</a>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {{$job->selectors}}

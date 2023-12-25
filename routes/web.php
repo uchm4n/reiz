@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', MainController::class);
+Route::get('/', [MainController::class, 'main']);
+Route::get('/details/{id}', [MainController::class, 'details']);
 
 Route::get('/test', function () {
-
     return view('main');
 });
